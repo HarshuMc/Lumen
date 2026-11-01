@@ -1,0 +1,711 @@
+/* LUMEN - live glass stylesheet.
+ *
+ * Every colour is a token injected by ui.settings, so a theme switch or an
+ * opacity change only swaps one CSS provider.  The window stays fully
+ * transparent (window.lumen) while .main-container paints the frosted plate
+ * with a 20px radius; together with the Cairo clear in LumenWindow this is
+ * what removes the black corner artefacts on picom/LXQt.
+ */
+
+/* Only properties documented for GTK 3 are used here: an unknown property
+ * would make the CSS parser drop the whole stylesheet. */
+* {
+  outline-style: none;
+}
+
+window.lumen,
+window.lumen .background,
+.lumen-root,
+.content,
+.body,
+.gallery-host {
+  background-color: transparent;
+  background-image: none;
+}
+
+window.lumen {
+  font-family: "Inter", "Cantarell", "Segoe UI", "DejaVu Sans", sans-serif;
+  color: @lumen_text;
+}
+
+/* ---------------------------------------------------------------- shell */
+.main-container {
+  background-color: @lumen_bg;
+  border-radius: 20px;
+  border: 1px solid @lumen_border;
+  box-shadow: 0 18px 48px @lumen_shadow;
+}
+
+.header {
+  min-height: 48px;
+  padding: 0 12px 0 14px;
+  background-color: @lumen_header;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom: 1px solid @lumen_border;
+}
+
+.title-block {
+  padding: 0;
+}
+
+.app-name {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: @lumen_text;
+}
+
+.tagline {
+  font-size: 9px;
+  letter-spacing: 0.6px;
+  color: @lumen_text_dim;
+  margin-top: -2px;
+}
+
+/* ------------------------------------------------------------- controls */
+button {
+  background-image: none;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+  color: @lumen_text;
+  padding: 4px 10px;
+  border-radius: 9px;
+}
+
+button:hover {
+  background-color: @lumen_hover;
+}
+
+button:active,
+button:checked {
+  background-color: @lumen_selected;
+}
+
+button:disabled {
+  color: @lumen_text_dim;
+}
+
+.icon-btn {
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0;
+  border-radius: 9px;
+  font-size: 14px;
+  color: @lumen_text;
+}
+
+.icon-btn:hover {
+  background-color: @lumen_hover;
+}
+
+.icon-btn.flat-active {
+  background-color: @lumen_accent_soft;
+  color: @lumen_text;
+}
+
+.chip {
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background-color: @lumen_panel;
+  border: 1px solid @lumen_border;
+  font-size: 11px;
+  color: @lumen_text;
+}
+
+.chip:hover {
+  background-color: @lumen_hover;
+}
+
+.chip.checked,
+.chip:checked {
+  background-color: @lumen_selected;
+  border-color: @lumen_accent;
+}
+
+.segmented {
+  background-color: @lumen_panel;
+  border: 1px solid @lumen_border;
+  border-radius: 11px;
+  padding: 2px;
+}
+
+.seg-btn {
+  min-height: 22px;
+  min-width: 30px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background-color: transparent;
+  font-size: 11px;
+  color: @lumen_text_dim;
+}
+
+.seg-btn:checked {
+  background-color: @lumen_selected;
+  color: @lumen_text;
+}
+
+.ghost-btn {
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid @lumen_border;
+  background-color: @lumen_panel;
+  font-size: 11px;
+}
+
+.primary-btn {
+  min-height: 32px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background-color: @lumen_accent;
+  color: @lumen_on_accent;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.primary-btn:hover {
+  background-color: @lumen_accent;
+  box-shadow: 0 4px 14px @lumen_accent_soft;
+}
+
+entry.search,
+entry.search:focus {
+  background-image: none;
+  background-color: @lumen_input;
+  border: 1px solid @lumen_border;
+  border-radius: 12px;
+  padding: 4px 10px;
+  min-height: 24px;
+  color: @lumen_text;
+  caret-color: @lumen_accent2;
+  font-size: 11px;
+}
+
+entry.search image {
+  color: @lumen_text_dim;
+}
+
+.search {
+  min-width: 168px;
+}
+
+entry {
+  background-image: none;
+  background-color: @lumen_input;
+  border: 1px solid @lumen_border;
+  border-radius: 10px;
+  padding: 5px 9px;
+  color: @lumen_text;
+  caret-color: @lumen_accent2;
+}
+
+entry:focus {
+  border-color: @lumen_accent;
+}
+
+spinbutton {
+  background-color: @lumen_input;
+  border-radius: 10px;
+}
+
+/* opacity slider */
+.opacity-scale {
+  min-width: 92px;
+}
+
+.opacity-scale trough {
+  min-height: 4px;
+  border-radius: 3px;
+  background-color: @lumen_panel;
+  border: none;
+}
+
+.opacity-scale highlight {
+  min-height: 4px;
+  border-radius: 3px;
+  background-image: linear-gradient(to right, @lumen_accent, @lumen_accent2);
+}
+
+.opacity-scale slider {
+  min-width: 13px;
+  min-height: 13px;
+  margin: -5px;
+  border-radius: 8px;
+  background-image: none;
+  background-color: @lumen_text;
+  border: 2px solid @lumen_accent;
+  box-shadow: 0 2px 6px @lumen_shadow;
+}
+
+/* --------------------------------------------------------------- sidebar */
+.sidebar {
+  background-color: @lumen_panel_soft;
+  border-right: 1px solid @lumen_border;
+  border-bottom-left-radius: 20px;
+  padding: 14px 12px 10px 12px;
+}
+
+.section-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  color: @lumen_text_dim;
+  padding: 4px 6px;
+}
+
+.side-list {
+  background-color: transparent;
+}
+
+.side-list row {
+  background-color: transparent;
+  border-radius: 11px;
+  padding: 0;
+  margin: 1px 0;
+  min-height: 34px;
+}
+
+.side-list row:hover {
+  background-color: @lumen_hover;
+}
+
+.side-list row:selected {
+  background-color: @lumen_selected;
+}
+
+.side-row {
+  padding: 6px 9px;
+}
+
+.side-icon {
+  font-size: 13px;
+  min-width: 22px;
+}
+
+.side-logo {
+  min-width: 22px;
+}
+
+.side-label {
+  font-size: 11.5px;
+  color: @lumen_text;
+}
+
+.side-count {
+  font-size: 9.5px;
+  color: @lumen_text_dim;
+  background-color: @lumen_panel;
+  border-radius: 7px;
+  padding: 1px 7px;
+  min-width: 14px;
+}
+
+.side-list row:selected .side-count {
+  background-color: @lumen_accent_soft;
+  color: @lumen_text;
+}
+
+.folder-row {
+  font-size: 10.5px;
+  color: @lumen_text_dim;
+  padding: 4px 9px;
+}
+
+.folder-row:hover {
+  color: @lumen_text;
+}
+
+.sidebar-footer {
+  padding-top: 6px;
+}
+
+.sidebar-hint {
+  font-size: 9px;
+  color: @lumen_text_dim;
+  padding: 2px 6px;
+}
+
+/* ---------------------------------------------------------------- header */
+.content-header {
+  padding: 14px 18px 6px 18px;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: @lumen_text;
+}
+
+.page-sub {
+  font-size: 10px;
+  color: @lumen_text_dim;
+  margin-top: 1px;
+}
+
+/* ---------------------------------------------------------------- gallery */
+.gallery-scroll {
+  background-color: transparent;
+  border: none;
+}
+
+.gallery-scroll undershoot,
+.gallery-scroll overshoot {
+  background: none;
+}
+
+.gallery-flow {
+  background-color: transparent;
+  padding: 8px 14px 18px 14px;
+}
+
+.gallery-flow flowboxchild {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+.cell {
+  background-color: transparent;
+  padding: 4px;
+  border-radius: 14px;
+}
+
+.cell:hover {
+  background-color: @lumen_hover;
+}
+
+.cell-name {
+  font-size: 10.5px;
+  color: @lumen_text;
+}
+
+.cell-sub {
+  font-size: 9px;
+  color: @lumen_text_dim;
+}
+
+/* ---------------------------------------------------------------- albums */
+.album-card {
+  background-color: @lumen_panel;
+  border: 1px solid @lumen_border;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.album-card:hover {
+  background-color: @lumen_hover;
+  border-color: @lumen_accent;
+}
+
+.album-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: @lumen_text;
+}
+
+.album-count {
+  font-size: 9px;
+  color: @lumen_text_dim;
+}
+
+.album-new {
+  border: 1px dashed @lumen_border;
+  background-color: transparent;
+}
+
+.album-plus {
+  font-size: 26px;
+  color: @lumen_text_dim;
+}
+
+/* --------------------------------------------------------------- details */
+.details {
+  background-color: @lumen_panel_soft;
+  border-left: 1px solid @lumen_border;
+  border-bottom-right-radius: 20px;
+  padding: 14px 14px 10px 14px;
+}
+
+.details-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: @lumen_text;
+}
+
+.details-sub {
+  font-size: 9.5px;
+  color: @lumen_text_dim;
+}
+
+.meta-row {
+  padding: 3px 0;
+}
+
+.meta-key {
+  font-size: 9.5px;
+  color: @lumen_text_dim;
+}
+
+.meta-value {
+  font-size: 10px;
+  color: @lumen_text;
+}
+
+.detail-box {
+  background-color: @lumen_panel;
+  border: 1px solid @lumen_border;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.fav-btn {
+  min-height: 30px;
+  border-radius: 10px;
+  border: 1px solid @lumen_border;
+  background-color: @lumen_panel;
+  font-size: 11px;
+}
+
+.fav-btn.on {
+  background-color: @lumen_accent_soft;
+  border-color: @lumen_accent;
+}
+
+/* ---------------------------------------------------------------- viewer */
+.viewer {
+  background-color: @lumen_viewer;
+  border-radius: 20px;
+}
+
+.viewer-bar {
+  padding: 8px 12px;
+  background-color: transparent;
+}
+
+.viewer-title {
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.viewer-sub {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 9px;
+}
+
+.viewer .icon-btn {
+  color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.10);
+  border-radius: 9px;
+}
+
+.viewer .icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.20);
+}
+
+.viewer-hint {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 9px;
+  padding: 6px 0 10px 0;
+}
+
+.viewer-strip {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 4px 10px;
+}
+
+/* ------------------------------------------------------------ action bar */
+.action-bar {
+  background-color: @lumen_bg_solid;
+  border: 1px solid @lumen_border;
+  border-radius: 16px;
+  padding: 6px 8px;
+  box-shadow: 0 10px 30px @lumen_shadow;
+}
+
+.action-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: @lumen_text;
+  padding: 0 8px 0 4px;
+}
+
+.ab-btn {
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 9px;
+  background-color: transparent;
+  font-size: 11px;
+  color: @lumen_text;
+}
+
+.ab-btn:hover {
+  background-color: @lumen_hover;
+}
+
+.ab-btn.danger:hover {
+  background-color: rgba(255, 95, 87, 0.22);
+}
+
+/* ------------------------------------------------------------ misc / HUD */
+.toast {
+  background-color: @lumen_bg_solid;
+  border: 1px solid @lumen_border;
+  border-radius: 12px;
+  padding: 8px 16px;
+  color: @lumen_text;
+  font-size: 11px;
+  box-shadow: 0 8px 24px @lumen_shadow;
+}
+
+.loading-overlay {
+  background-color: alpha(@lumen_bg_solid, 0.55);
+  border-radius: 20px;
+}
+
+.loading-label {
+  font-size: 10.5px;
+  color: @lumen_text;
+}
+
+.loading-sub {
+  font-size: 9px;
+  color: @lumen_text_dim;
+}
+
+.empty-icon {
+  font-size: 34px;
+  color: @lumen_text_dim;
+}
+
+.empty-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: @lumen_text;
+}
+
+.empty-sub {
+  font-size: 10.5px;
+  color: @lumen_text_dim;
+}
+
+spinner {
+  color: @lumen_accent;
+}
+
+tooltip.background {
+  background-color: @lumen_bg_solid;
+  border: 1px solid @lumen_border;
+  border-radius: 8px;
+}
+
+tooltip {
+  color: @lumen_text;
+  font-size: 9.5px;
+}
+
+/* ----------------------------------------------------------- chrome bits */
+scrollbar {
+  background-color: transparent;
+  border: none;
+}
+
+scrollbar.vertical {
+  min-width: 9px;
+}
+
+scrollbar.horizontal {
+  min-height: 9px;
+}
+
+scrollbar slider {
+  background-color: @lumen_scroll;
+  border-radius: 8px;
+  min-width: 5px;
+  min-height: 26px;
+  margin: 2px;
+}
+
+scrollbar slider:hover {
+  background-color: @lumen_text_dim;
+}
+
+separator {
+  background-color: @lumen_border;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+menu {
+  background-color: @lumen_bg_solid;
+  border: 1px solid @lumen_border;
+  border-radius: 12px;
+  padding: 6px;
+  color: @lumen_text;
+}
+
+menu menuitem {
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+}
+
+menu menuitem:hover {
+  background-color: @lumen_hover;
+}
+
+menu menuitem:disabled {
+  color: @lumen_text_dim;
+}
+
+menu arrow {
+  color: @lumen_text_dim;
+}
+
+combobox button {
+  background-color: @lumen_panel;
+  border: 1px solid @lumen_border;
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-size: 11px;
+  min-height: 24px;
+}
+
+combobox button:hover {
+  background-color: @lumen_hover;
+}
+
+combobox arrow {
+  color: @lumen_text_dim;
+  min-width: 12px;
+}
+
+dialog {
+  background-color: @lumen_bg_solid;
+  color: @lumen_text;
+}
+
+dialog .dialog-action-area button {
+  min-height: 30px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background-color: @lumen_panel;
+  border: 1px solid @lumen_border;
+}
+
+dialog .dialog-action-area button.suggested-action {
+  background-color: @lumen_accent;
+  color: @lumen_on_accent;
+}
+
+label {
+  color: @lumen_text;
+}
+
+.check {
+  color: @lumen_text;
+}

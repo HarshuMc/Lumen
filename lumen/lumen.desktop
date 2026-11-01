@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=LUMEN
+GenericName=Photo Gallery
+Comment=Your Memories, Clearly - Glassy Gallery
+Exec=python3 /home/USER/.local/share/lumen/main.py
+Icon=lumen
+Terminal=false
+Categories=Graphics;Photography;Viewer;
+Keywords=gallery;photos;images;videos;viewer;album;lumen;
+StartupNotify=true
+StartupWMClass=lumen
+MimeType=image/jpeg;image/png;image/gif;image/webp;image/bmp;image/tiff;image/svg+xml;video/mp4;video/x-matroska;video/quicktime;application/pdf;
